@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import Response
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -35,9 +36,16 @@ def get_all_models():
 def insert_data():
     if request.is_json:
         incoming_data = request.get_json()
-        return incoming_data.get('test')
+
+        identifier = incoming_data.get("id")
+        description = incoming_data.get("description")
+
+        if not identifier or not description:
+            return Response(response="Missing data at request content", status=500)
+        
+        return Response(response="Data was inserted into the database", status=200)
     else:
-        return "meh"
+        return Response(response="Bad Request", status=500)
     
 if __name__ == '__main_':
     app.run(debug=True, port=5000)
