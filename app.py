@@ -39,14 +39,14 @@ def process_dummy_data_insertion_request():
     else:
         return Response(response=build_error_message("Not JSON Type"), status=400)
 
+def is_invalid_dummy_data(id, description):
+    return not id or not description
+
 def build_error_message(message):
     return json.dumps({"error-message" : message})
 
 def build_success_message(message):
     return  json.dumps({"success-message" : message})
-
-def is_invalid_dummy_data(id, description):
-    return not id or not description
 
 if __name__ == '__main_':
     myApp.run(debug=True, port=5000)
