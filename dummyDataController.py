@@ -18,5 +18,6 @@ class DummyDataController:
             self.session.add(dummy_data)
             self.session.commit()
             return True
-        except:
+        except Exception as err:
+            self.session.rollback()
             return False
